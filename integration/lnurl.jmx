@@ -200,6 +200,16 @@
               <intProp name="Assertion.test_type">8</intProp>
             </ResponseAssertion>
             <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Check page contains `v-for&apos;` text" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-505784460">v-for=&quot;extension in filteredExtensions&quot;</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
+            <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="[lnurlp] Go to &quot;lnurlp&quot; page" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
@@ -271,9 +281,10 @@
               <intProp name="Assertion.test_type">8</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Check page contains `New Pay Link` text" enabled="true">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Check page content" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="2067560210">New pay link</stringProp>
+                <stringProp name="1232574677">curl -X POST http://127.0.0.1:5000/lnurlp/api/v1/links -d</stringProp>
               </collectionProp>
               <stringProp name="Assertion.custom_message"></stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -1183,6 +1194,16 @@ vars.put(&quot;userBalance&quot;, userBalance)</stringProp>
               <intProp name="Assertion.test_type">8</intProp>
             </ResponseAssertion>
             <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Check page contains `v-for&apos;` text" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-505784460">v-for=&quot;extension in filteredExtensions&quot;</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
+            <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="[lnurlw] Go to &quot;lnurlw&quot; page" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
@@ -1250,9 +1271,10 @@ vars.put(&quot;userBalance&quot;, userBalance)</stringProp>
               <intProp name="Assertion.test_type">8</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Check page contains `Withdraw links` text" enabled="true">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Check page conent" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="851725123">Withdraw links</stringProp>
+                <stringProp name="1102950636">curl -X GET http://127.0.0.1:5000/withdraw/api/v1/links -H</stringProp>
               </collectionProp>
               <stringProp name="Assertion.custom_message"></stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
