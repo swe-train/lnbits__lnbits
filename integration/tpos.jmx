@@ -2864,7 +2864,7 @@ if (!resp.payment_hash) {
             </ResponseAssertion>
             <hashTree/>
             <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="Check `paid` field" enabled="true">
-              <stringProp name="JSON_PATH">claimed</stringProp>
+              <stringProp name="JSON_PATH">paid</stringProp>
               <stringProp name="EXPECTED_VALUE">true</stringProp>
               <boolProp name="JSONVALIDATION">true</boolProp>
               <boolProp name="EXPECT_NULL">false</boolProp>
