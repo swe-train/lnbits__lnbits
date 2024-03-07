@@ -387,10 +387,12 @@
               <stringProp name="cacheKey">true</stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
-              <stringProp name="script">var resp = JSON.parse(prev.getResponseDataAsString())[0]
+              <stringProp name="script">var resp = JSON.parse(prev.getResponseDataAsString())[0];
 
 vars.put(&quot;adminWalletId&quot;, resp.id || &quot;no-admin-wallet-id&quot;);
-vars.put(&quot;adminWalletKey&quot;, resp.adminkey || &apos;no-adminkey&apos;);
+vars.put(&quot;adminWalletKey&quot;, resp.adminkey || &quot;no-adminkey&quot;);
+
+props.put(&quot;adminWalletKey&quot;, resp.adminkey || &quot;no-adminkey&quot;);
 </stringProp>
               <stringProp name="scriptLanguage">javascript</stringProp>
             </JSR223PostProcessor>
