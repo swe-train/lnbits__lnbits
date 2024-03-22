@@ -2,7 +2,7 @@ FROM python:3.10-slim-bullseye
 
 RUN apt-get clean
 RUN apt-get update
-RUN apt-get install -y curl pkg-config build-essential libnss-myhostname
+RUN apt-get install -y curl pkg-config build-essential libnss-myhostname npm
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="/root/.local/bin:$PATH"
@@ -20,7 +20,7 @@ COPY . .
 
 RUN mkdir data
 
-RUN poetry install --only main
+RUN make
 
 ENV LNBITS_PORT="5000"
 ENV LNBITS_HOST="0.0.0.0"

@@ -40,7 +40,12 @@ git checkout main
 # Identify your version with python3 --version and specify in the next line
 # command is only needed when your default python is not ^3.9 or ^3.10
 poetry env use python3.9
-poetry install --only main
+
+# Install nodejs and npm
+sudo apt-get install nodejs npm
+
+# run poetry install, npm install and builds the frontend
+make build
 
 mkdir data
 cp .env.example .env
