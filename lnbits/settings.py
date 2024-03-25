@@ -236,6 +236,12 @@ class LnTipsFundingSource(LNbitsSettings):
     lntips_invoice_key: Optional[str] = Field(default=None)
 
 
+class BoltzFundingSource(LNbitsSettings):
+    boltz_client_endpoint: Optional[str] = Field(default="127.0.0.1:9002")
+    boltz_client_macaroon: Optional[str] = Field(default=None)
+    boltz_client_wallet: Optional[str] = Field(default="lnbits")
+
+
 class LightningSettings(LNbitsSettings):
     lightning_invoice_expiry: int = Field(default=3600)
 
@@ -251,6 +257,7 @@ class FundingSourcesSettings(
     LndGrpcFundingSource,
     LnPayFundingSource,
     AlbyFundingSource,
+    BoltzFundingSource,
     ZBDFundingSource,
     OpenNodeFundingSource,
     SparkFundingSource,
