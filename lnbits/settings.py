@@ -414,6 +414,7 @@ class SuperUserSettings(LNbitsSettings):
             "LnTipsWallet",
             "LNPayWallet",
             "AlbyWallet",
+            "BoltzWallet",
             "ZBDWallet",
             "LNbitsWallet",
             "OpenNodeWallet",
