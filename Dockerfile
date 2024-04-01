@@ -14,13 +14,11 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 RUN apt-get update
 RUN apt-get install -y postgresql-client-14
 
+COPY . /app
 WORKDIR /app
 
-COPY . .
-
-RUN mkdir data
-
 RUN make
+RUN mkdir data
 
 ENV LNBITS_PORT="5000"
 ENV LNBITS_HOST="0.0.0.0"
