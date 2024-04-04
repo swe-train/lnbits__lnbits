@@ -1,0 +1,108 @@
+{
+    "funding_sources": {
+        "breez": {
+            "wallet_class": "BreezSdkWallet",
+            "settings": {
+                "breez_api_key": "100",
+                "breez_greenlight_seed": "push divert icon era bracket fade much kind reason injury suffer muffin",
+                "breez_greenlight_device_key": "tests/wallets/data/certificates/cert.pem",
+                "breez_greenlight_device_cert": "tests/wallets/data/certificates/breez.crt"
+            }
+        },
+        "corelightning": {
+            "wallet_class": "CoreLightningWallet",
+            "settings": {
+                "corelightning_rpc": "some-mock-value"
+            }
+        }
+    },
+    "functions": {
+        "status": {
+            "mocks": {
+                "breez": {
+                    "breez_connect": {
+                        "method": "breez_sdk.connect",
+                        "request_type": "function"
+                    }
+                },
+                "corelightning": {
+                    "rpc_new": {
+                        "method": "pyln.client.LightningRpc.__new__",
+                        "request_type": "function",
+                        "response_type": "object",
+                        "response": {
+                            "help": {
+                                "response_type": "function",
+                                "response": {
+                                    "help": [
+                                        {
+                                            "command": "some command"
+                                        }
+                                    ]
+                                }
+                            },
+                            "listinvoices": {
+                                "response_type": "function",
+                                "response": {
+                                    "invoices": []
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tests": [
+                {
+                    "description": "success",
+                    "call_params": {},
+                    "expect": {
+                        "error_message": null,
+                        "balance_msat": 55000
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "description": "add node_info field",
+                                    "response_type": "object",
+                                    "response": {
+                                        "node_info": {
+                                            "response_type": "data",
+                                            "response": {
+                                                "channels_balance_msat": 55000
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "description": "listfunds mock: todo 1 channel",
+                                    "request_type": "function",
+                                    "response_type": "object",
+                                    "response": {
+                                        "listfunds": {
+                                            "response_type": "json",
+                                            "response": {
+                                                "channels": [
+                                                    {
+                                                        "our_amount_msat": 25000
+                                                    },
+                                                    {
+                                                        "our_amount_msat": 30000
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
