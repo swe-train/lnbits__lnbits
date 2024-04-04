@@ -80,11 +80,9 @@
                             "rpc_new": [
                                 {
                                     "description": "listfunds mock: todo 1 channel",
-                                    "request_type": "function",
-                                    "response_type": "object",
                                     "response": {
                                         "listfunds": {
-                                            "response_type": "json",
+                                            "response_type": "function",
                                             "response": {
                                                 "channels": [
                                                     {

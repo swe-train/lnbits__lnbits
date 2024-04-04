@@ -55,8 +55,8 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
             elif response_type == "data":
                 d[k] = _data_mock(response)
             elif response_type == "json":
-                print("### json", response)
                 d[k] = response
+
 
             request_type = mock.request_type
             m = d  # default to json
@@ -65,7 +65,7 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
             elif request_type == "data":
                 m = _data_mock(d)
 
-        print("### d", d)
+        print("### data1", d)
         m = _data_mock(d)
         if mock.request_type == "function":
             print("#### mocker.patch", mock.method)
@@ -74,7 +74,7 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
     wallet: BaseWallet = _load_funding_source(test_data.funding_source)
     status = await wallet.status()
 
-    print("#### walet.status", status)
+    print("#### wallet.status", status)
 
     assert status.error_message is None
     assert status.balance_msat == 55000
