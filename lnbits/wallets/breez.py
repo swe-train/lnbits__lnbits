@@ -146,7 +146,8 @@ else:
             try:
                 node_info: breez_sdk.NodeState = self.sdk_services.node_info()
             except Exception as exc:
-                return StatusResponse(f"Failed to connect to breez, got: '{exc}...'", 0)
+                logger.warning(f"Failed to connect to breez, got: '{exc}'")
+                return StatusResponse(f"Unable to connect, got: '{exc}'", 0)
 
             return StatusResponse(None, int(node_info.channels_balance_msat))
 

@@ -24,9 +24,23 @@ def build_test_id(test: WalletTest):
     return f"{test.funding_source}.{test.function}({test.description})"
 
 
-def fn_factory(data: str):
+def fn_factory(data):
     def f1(*args, **kwargs):
         return data
+
+    return f1
+
+
+def fn_raise(error):
+    def f1(*args, **kwargs):
+        data = error["data"] if "data" in error else None
+        if "module" not in error or "class" not in error:
+            raise Exception(data)
+
+        error_module = importlib.import_module(error["module"])
+        error_class = getattr(error_module, error["class"])
+
+        raise error_class(**data)
 
     return f1
 
@@ -52,7 +66,12 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
             if request_type == "function":
                 if response_type == "data":
                     response = _dict_to_object(response)
-                return_value[field_name] = fn_factory(response)
+
+                if response_type == "exception":
+                    return_value[field_name] = fn_raise(response)
+                    # mocker.patch().side
+                else:
+                    return_value[field_name] = fn_factory(response)
             elif request_type == "data":
                 return_value[field_name] = _dict_to_object(response)
             elif request_type == "json":
@@ -61,11 +80,14 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
         m = _data_mock(return_value)
         mocker.patch(mock.method, m)
 
-    wallet: BaseWallet = _load_funding_source(test_data.funding_source)
-    status = await wallet.status()
+    wallet = _load_funding_source(test_data.funding_source)
+    await _check_assertions(wallet, test_data)
 
-    assert status.error_message is None
-    assert status.balance_msat == 55000
+    # wallet: BaseWallet = _load_funding_source(test_data.funding_source)
+    # status = await wallet.status()
+
+    # assert status.error_message is None
+    # assert status.balance_msat == 55000
 
 
 def _load_funding_source(funding_source: FundingSourceConfig) -> BaseWallet:
@@ -99,3 +121,41 @@ def _dict_to_object(data: dict) -> DataObject:
 
 def _data_mock(data: dict) -> Mock:
     return Mock(return_value=_dict_to_object(data))
+
+
+async def _check_assertions(wallet, _test_data: WalletTest):
+    test_data = _test_data.dict()
+    tested_func = _test_data.function
+    call_params = _test_data.call_params
+
+    if "expect" in test_data:
+        await _assert_data(wallet, tested_func, call_params, _test_data.expect)
+        # if len(_test_data.mocks) == 0:
+        #     # all calls should fail after this method is called
+        #     await wallet.cleanup()
+        #     # same behaviour expected is server canot be reached
+        #     # or if the connection was closed
+        #     await _assert_data(wallet, tested_func, call_params, _test_data.expect)
+    elif "expect_error" in test_data:
+        await _assert_error(wallet, tested_func, call_params, _test_data.expect_error)
+    else:
+        assert False, "Expected outcome not specified"
+
+
+async def _assert_data(wallet, tested_func, call_params, expect):
+    resp = await getattr(wallet, tested_func)(**call_params)
+    for key in expect:
+        received = getattr(resp, key)
+        expected = expect[key]
+        assert (
+            getattr(resp, key) == expect[key]
+        ), f"""Field "{key}". Received: "{received}". Expected: "{expected}"."""
+
+
+async def _assert_error(wallet, tested_func, call_params, expect_error):
+    error_module = importlib.import_module(expect_error["module"])
+    error_class = getattr(error_module, expect_error["class"])
+    with pytest.raises(error_class) as e_info:
+        await getattr(wallet, tested_func)(**call_params)
+
+    assert e_info.match(expect_error["message"])

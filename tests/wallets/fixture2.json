@@ -65,7 +65,6 @@
                         "breez": {
                             "breez_connect": [
                                 {
-                                    "description": "add node_info field",
                                     "response_type": "data",
                                     "response": {
                                         "node_info": {
@@ -112,6 +111,47 @@
                                                         "our_amount_msat": 30000
                                                     }
                                                 ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "description": "error",
+                    "call_params": {},
+                    "expect": {
+                        "error_message": "Unable to connect, got: 'test-error'",
+                        "balance_msat": 0
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "response_type": "data",
+                                    "response": {
+                                        "node_info": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "data": "test-error"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "response": {
+                                        "listfunds": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "data": "test-error"
                                             }
                                         }
                                     }
