@@ -40,8 +40,7 @@ class CoreLightningWallet(Wallet):
 
         self.ln = LightningRpc(rpc)
         # check if description_hash is supported (from corelightning>=v0.11.0)
-        x = self.ln.help("invoice")
-        command = x["help"][0]["command"]  # type: ignore
+        command = self.ln.help("invoice")x["help"][0]["command"]  # type: ignore
         self.supports_description_hash = "deschashonly" in command
 
         # check last payindex so we can listen from that point on
