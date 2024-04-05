@@ -82,7 +82,23 @@
                         "corelightning": {
                             "rpc_new": [
                                 {
-                                    "description": "listfunds mock: todo 1 channel",
+                                    "description": "one channel",
+                                    "response": {
+                                        "listfunds": {
+                                            "request_type": "function",
+                                            "response_type": "json",
+                                            "response": {
+                                                "channels": [
+                                                    {
+                                                        "our_amount_msat": 55000
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "description": "two channels",
                                     "response": {
                                         "listfunds": {
                                             "request_type": "function",
