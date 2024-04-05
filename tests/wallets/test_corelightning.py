@@ -19,7 +19,6 @@ async def test_status(mocker: MockerFixture):
 
     def fn_factory(data: str):
         def f1(*args, **kwargs):
-            print("### f1", args)
             return data
 
         return f1

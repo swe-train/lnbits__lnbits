@@ -38,14 +38,10 @@ def fn_factory(data: str):
     ids=build_test_id,
 )
 async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
-    # print("### test_data", dict(test_data))
-    print("######## test ########", test_data.description)
     if test_data.skip:
         pytest.skip()
 
     for mock in test_data.mocks:
-        print("### mock", mock)
-
         return_value = {}
         for field_name in mock.response:
             field = mock.response[field_name]
@@ -67,8 +63,6 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
 
     wallet: BaseWallet = _load_funding_source(test_data.funding_source)
     status = await wallet.status()
-
-    print("#### wallet.status", status)
 
     assert status.error_message is None
     assert status.balance_msat == 55000

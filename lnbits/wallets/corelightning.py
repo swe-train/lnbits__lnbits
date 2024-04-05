@@ -41,7 +41,6 @@ class CoreLightningWallet(Wallet):
         self.ln = LightningRpc(rpc)
         # check if description_hash is supported (from corelightning>=v0.11.0)
         x = self.ln.help("invoice")
-        print("### x", x)
         command = x["help"][0]["command"]  # type: ignore
         self.supports_description_hash = "deschashonly" in command
 
