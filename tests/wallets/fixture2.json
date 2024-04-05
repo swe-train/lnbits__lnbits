@@ -29,10 +29,11 @@
                     "rpc_new": {
                         "method": "pyln.client.LightningRpc.__new__",
                         "request_type": "function",
-                        "response_type": "object",
+                        "response_type": "data",
                         "response": {
                             "help": {
-                                "response_type": "function",
+                                "request_type": "function",
+                                "response_type": "json",
                                 "response": {
                                     "help": [
                                         {
@@ -42,7 +43,8 @@
                                 }
                             },
                             "listinvoices": {
-                                "response_type": "function",
+                                "request_type": "function",
+                                "response_type": "json",
                                 "response": {
                                     "invoices": []
                                 }
@@ -67,8 +69,8 @@
                                     "response_type": "data",
                                     "response": {
                                         "node_info": {
-                                            "response_type": "function",
-                                            "request_type": "data",
+                                            "request_type": "function",
+                                            "response_type": "data",
                                             "response": {
                                                 "channels_balance_msat": 55000
                                             }
@@ -83,7 +85,8 @@
                                     "description": "listfunds mock: todo 1 channel",
                                     "response": {
                                         "listfunds": {
-                                            "response_type": "function",
+                                            "request_type": "function",
+                                            "response_type": "json",
                                             "response": {
                                                 "channels": [
                                                     {
