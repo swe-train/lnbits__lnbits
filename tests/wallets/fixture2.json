@@ -64,10 +64,11 @@
                             "breez_connect": [
                                 {
                                     "description": "add node_info field",
-                                    "response_type": "object",
+                                    "response_type": "data",
                                     "response": {
                                         "node_info": {
-                                            "response_type": "data",
+                                            "response_type": "function",
+                                            "request_type": "data",
                                             "response": {
                                                 "channels_balance_msat": 55000
                                             }

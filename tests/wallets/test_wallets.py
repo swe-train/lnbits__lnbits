@@ -52,11 +52,15 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
             response_type = field["response_type"]
             response = field["response"]
             if response_type == "function":
+                if "request_type" in field and field["request_type"] == "data":
+                    response = _dict_to_object(response)
                 return_value[field_name] = fn_factory(response)
             elif response_type == "data":
                 return_value[field_name] = _dict_to_object(response)
             elif response_type == "json":
                 return_value[field_name] = response
+
+
 
 
         m = _data_mock(return_value)
