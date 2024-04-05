@@ -46,30 +46,21 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
     for mock in test_data.mocks:
         print("### mock", mock)
 
-        d = {}
-        for k in mock.response:
-            response_type = mock.response[k]["response_type"]
-            response = mock.response[k]["response"]
+        return_value = {}
+        for field_name in mock.response:
+            field = mock.response[field_name]
+            response_type = field["response_type"]
+            response = field["response"]
             if response_type == "function":
-                d[k] = fn_factory(response)
+                return_value[field_name] = fn_factory(response)
             elif response_type == "data":
-                d[k] = _data_mock(response)
+                return_value[field_name] = _dict_to_object(response)
             elif response_type == "json":
-                d[k] = response
+                return_value[field_name] = response
 
 
-            request_type = mock.request_type
-            m = d  # default to json
-            if request_type == "function":
-                m = fn_factory(d)
-            elif request_type == "data":
-                m = _data_mock(d)
-
-        print("### data1", d)
-        m = _data_mock(d)
-        if mock.request_type == "function":
-            print("#### mocker.patch", mock.method)
-            mocker.patch(mock.method, m)
+        m = _data_mock(return_value)
+        mocker.patch(mock.method, m)
 
     wallet: BaseWallet = _load_funding_source(test_data.funding_source)
     status = await wallet.status()
