@@ -54,6 +54,9 @@ class CoreLightningWallet(Wallet):
     async def status(self) -> StatusResponse:
         try:
             funds: dict = self.ln.listfunds()  # type: ignore
+            if len(funds) == 0:
+                return StatusResponse("no data", 0)
+
             return StatusResponse(
                 None, sum([int(ch["our_amount_msat"]) for ch in funds["channels"]])
             )

@@ -159,6 +159,32 @@
                             ]
                         }
                     }
+                },
+                {
+                    "description": "missing data",
+                    "call_params": {},
+                    "expect": {
+                        "error_message": "no data",
+                        "balance_msat": 0
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": []
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "response": {
+                                        "listfunds": {
+                                            "request_type": "function",
+                                            "response_type": "json",
+                                            "response": {}
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
             ]
         }
