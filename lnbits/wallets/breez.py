@@ -216,8 +216,10 @@ else:
                     False, None, None, None, f"payment failed: {exc}"
                 )
 
+            # second condition is relevant for tests only
             assert (
                 payment.status == breez_sdk.PaymentStatus.COMPLETE
+                or payment.status.value == breez_sdk.PaymentStatus.COMPLETE.value
             ), "payment is pending"
             # let's use the payment_hash as the checking_id
             checking_id = invoice.payment_hash
