@@ -190,34 +190,33 @@
                     "description": "RPC call failed:",
                     "call_params": {},
                     "expect": {
-                        "error_message": "Unable to connect, got: 'RPC call failed: method: x, payload: y, error: z'",
+                        "error_message": "RPC 'test_method' failed with 'test-error'.",
                         "balance_msat": 0
                     },
                     "mocks": {
                         "breez": {
-                            "breez_connect": [
+                            "breez_connect": []
+                        },
+                        "corelightning": {
+                            "rpc_new": [
                                 {
-                                    "response_type": "data",
                                     "response": {
-                                        "node_info": {
+                                        "listfunds": {
                                             "request_type": "function",
                                             "response_type": "exception",
                                             "response": {
                                                 "module": "pyln.client.lightning",
                                                 "class": "RpcError",
                                                 "data": {
-                                                    "method": "x",
+                                                    "method": "test_method",
                                                     "payload": "y",
-                                                    "error": "z"
+                                                    "error": "test-error"
                                                 }
                                             }
                                         }
                                     }
                                 }
                             ]
-                        },
-                        "corelightning": {
-                            "rpc_new": []
                         }
                     }
                 }
