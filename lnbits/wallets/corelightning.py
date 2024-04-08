@@ -101,7 +101,7 @@ class CoreLightningWallet(Wallet):
             if r.get("code") and r.get("code") < 0:  # type: ignore
                 raise Exception(r.get("message"))
 
-            return InvoiceResponse(True, r["payment_hash"], r["bolt11"], "")
+            return InvoiceResponse(True, r["payment_hash"], r["bolt11"], None)
         except RpcError as exc:
             error_message = (
                 f"CoreLightning method '{exc.method}' failed with"

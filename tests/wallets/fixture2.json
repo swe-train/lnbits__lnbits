@@ -221,6 +221,97 @@
                     }
                 }
             ]
+        },
+        "create_invoice": {
+            "mocks": {
+                "breez": {
+                    "breez_connect": {
+                        "method": "breez_sdk.connect",
+                        "request_type": "function"
+                    }
+                },
+                "corelightning": {
+                    "rpc_new": {
+                        "method": "pyln.client.LightningRpc.__new__",
+                        "request_type": "function",
+                        "response_type": "data",
+                        "response": {
+                            "help": {
+                                "request_type": "function",
+                                "response_type": "json",
+                                "response": {
+                                    "help": [
+                                        {
+                                            "command": "some command"
+                                        }
+                                    ]
+                                }
+                            },
+                            "listinvoices": {
+                                "request_type": "function",
+                                "response_type": "json",
+                                "response": {
+                                    "invoices": []
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tests": [
+                {
+                    "description": "success",
+                    "call_params": {
+                        "amount": 555,
+                        "memo": "Test Invoice",
+                        "label": "test-label"
+                    },
+                    "expect": {
+                        "success": true,
+                        "checking_id": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96",
+                        "payment_request": "lnbc5550n1pnq9jg3sp52rvwstvjcypjsaenzdh0h30jazvzsf8aaye0julprtth9kysxtuspp5e5s3z7felv4t9zrcc6wpn7ehvjl5yzewanzl5crljdl3jgeffyhqdq2f38xy6t5wvxqzjccqpjrzjq0yzeq76ney45hmjlnlpvu0nakzy2g35hqh0dujq8ujdpr2e42pf2rrs6vqpgcsqqqqqqqqqqqqqqeqqyg9qxpqysgqwftcx89k5pp28435pgxfl2vx3ksemzxccppw2j9yjn0ngr6ed7wj8ztc0d5kmt2mvzdlcgrludhz7jncd5l5l9w820hc4clpwhtqj3gq62g66n",
+                        "error_message": null
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "response_type": "data",
+                                    "response": {
+                                        "receive_payment": {
+                                            "request_type": "function",
+                                            "response_type": "data",
+                                            "response": {
+                                                "ln_invoice": {
+                                                    "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96",
+                                                    "bolt11": "lnbc5550n1pnq9jg3sp52rvwstvjcypjsaenzdh0h30jazvzsf8aaye0julprtth9kysxtuspp5e5s3z7felv4t9zrcc6wpn7ehvjl5yzewanzl5crljdl3jgeffyhqdq2f38xy6t5wvxqzjccqpjrzjq0yzeq76ney45hmjlnlpvu0nakzy2g35hqh0dujq8ujdpr2e42pf2rrs6vqpgcsqqqqqqqqqqqqqqeqqyg9qxpqysgqwftcx89k5pp28435pgxfl2vx3ksemzxccppw2j9yjn0ngr6ed7wj8ztc0d5kmt2mvzdlcgrludhz7jncd5l5l9w820hc4clpwhtqj3gq62g66n"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "description": "one channel",
+                                    "response": {
+                                        "invoice": {
+                                            "request_type": "function",
+                                            "response_type": "json",
+                                            "response": {
+                                                "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96",
+                                                "bolt11": "lnbc5550n1pnq9jg3sp52rvwstvjcypjsaenzdh0h30jazvzsf8aaye0julprtth9kysxtuspp5e5s3z7felv4t9zrcc6wpn7ehvjl5yzewanzl5crljdl3jgeffyhqdq2f38xy6t5wvxqzjccqpjrzjq0yzeq76ney45hmjlnlpvu0nakzy2g35hqh0dujq8ujdpr2e42pf2rrs6vqpgcsqqqqqqqqqqqqqqeqqyg9qxpqysgqwftcx89k5pp28435pgxfl2vx3ksemzxccppw2j9yjn0ngr6ed7wj8ztc0d5kmt2mvzdlcgrludhz7jncd5l5l9w820hc4clpwhtqj3gq62g66n"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
         }
     }
 }
