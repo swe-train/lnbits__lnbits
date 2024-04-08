@@ -108,6 +108,11 @@ class CoreLightningWallet(Wallet):
                 f" '{exc.error.get('message') or exc.error}'."  # type: ignore
             )
             return InvoiceResponse(False, None, None, error_message)
+        except KeyError as exc:
+            logger.warning(exc)
+            return InvoiceResponse(
+                False, None, None, "Server error: 'missing required fields'"
+            )
         except Exception as e:
             return InvoiceResponse(False, None, None, str(e))
 

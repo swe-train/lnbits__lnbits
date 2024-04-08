@@ -344,7 +344,6 @@
                         "corelightning": {
                             "rpc_new": [
                                 {
-                                    "description": "one channel",
                                     "response": {
                                         "invoice": {
                                             "request_type": "function",
@@ -352,6 +351,38 @@
                                             "response": {
                                                 "data": "test-error"
                                             }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "description": "missing data",
+                    "call_params": {
+                        "amount": 555,
+                        "memo": "Test Invoice",
+                        "label": "test-label"
+                    },
+                    "expect": {
+                        "success": false,
+                        "checking_id": null,
+                        "payment_request": null,
+                        "error_message": "Server error: 'missing required fields'"
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": []
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "response": {
+                                        "invoice": {
+                                            "request_type": "function",
+                                            "response_type": "json",
+                                            "response": {}
                                         }
                                     }
                                 }
