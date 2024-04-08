@@ -166,24 +166,31 @@ else:
                     "'description_hash' unsupported by Greenlight, provide"
                     " 'unhashed_description'"
                 )
-            breez_invoice: breez_sdk.ReceivePaymentResponse = (
-                self.sdk_services.receive_payment(
-                    breez_sdk.ReceivePaymentRequest(
-                        amount * 1000,  # breez uses msat
-                        unhashed_description.decode() if unhashed_description else memo,
-                        preimage=kwargs.get("preimage"),
-                        opening_fee_params=None,
-                        use_description_hash=True if unhashed_description else None,
+            try:
+                breez_invoice: breez_sdk.ReceivePaymentResponse = (
+                    self.sdk_services.receive_payment(
+                        breez_sdk.ReceivePaymentRequest(
+                            amount * 1000,  # breez uses msat
+                            (
+                                unhashed_description.decode()
+                                if unhashed_description
+                                else memo
+                            ),
+                            preimage=kwargs.get("preimage"),
+                            opening_fee_params=None,
+                            use_description_hash=True if unhashed_description else None,
+                        )
                     )
                 )
-            )
 
-            return InvoiceResponse(
-                True,
-                breez_invoice.ln_invoice.payment_hash,
-                breez_invoice.ln_invoice.bolt11,
-                None,
-            )
+                return InvoiceResponse(
+                    True,
+                    breez_invoice.ln_invoice.payment_hash,
+                    breez_invoice.ln_invoice.bolt11,
+                    None,
+                )
+            except Exception as e:
+                return InvoiceResponse(False, None, None, str(e))
 
         async def pay_invoice(
             self, bolt11: str, fee_limit_msat: int

@@ -310,6 +310,54 @@
                             ]
                         }
                     }
+                },
+                {
+                    "description": "error",
+                    "call_params": {
+                        "amount": 555,
+                        "memo": "Test Invoice",
+                        "label": "test-label"
+                    },
+                    "expect": {
+                        "success": false,
+                        "checking_id": null,
+                        "payment_request": null,
+                        "error_message": "test-error"
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "response_type": "data",
+                                    "response": {
+                                        "receive_payment": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "data": "test-error"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "description": "one channel",
+                                    "response": {
+                                        "invoice": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "data": "test-error"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
             ]
         }
