@@ -61,6 +61,7 @@ class CoreLightningWallet(Wallet):
                 None, sum([int(ch["our_amount_msat"]) for ch in funds["channels"]])
             )
         except RpcError as exc:
+            logger.warning(exc)
             error_message = f"RPC '{exc.method}' failed with '{exc.error}'."
             return StatusResponse(error_message, 0)
         except Exception as exc:
@@ -103,10 +104,8 @@ class CoreLightningWallet(Wallet):
 
             return InvoiceResponse(True, r["payment_hash"], r["bolt11"], None)
         except RpcError as exc:
-            error_message = (
-                f"CoreLightning method '{exc.method}' failed with"
-                f" '{exc.error.get('message') or exc.error}'."  # type: ignore
-            )
+            logger.warning(exc)
+            error_message = f"RPC '{exc.method}' failed with '{exc.error}'."
             return InvoiceResponse(False, None, None, error_message)
         except KeyError as exc:
             logger.warning(exc)
