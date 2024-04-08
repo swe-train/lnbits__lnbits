@@ -61,7 +61,7 @@ class CoreLightningWallet(Wallet):
                 None, sum([int(ch["our_amount_msat"]) for ch in funds["channels"]])
             )
         except RpcError as exc:
-            error_message = f"lightningd '{exc.method}' failed with '{exc.error}'."
+            error_message = f"RPC '{exc.method}' failed with '{exc.error}'."
             return StatusResponse(error_message, 0)
         except Exception as exc:
             logger.warning(f"Failed to connect to breez, got: '{exc}'")
