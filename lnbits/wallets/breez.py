@@ -266,8 +266,10 @@ else:
                     return PaymentStatus(
                         True, payment.fee_msat, payment.details.data.payment_preimage
                     )
-                elif payment.status == breez_sdk.PaymentStatus.FAILED:
-                    # todo: redundnat, never gets here due to assert
+                elif (
+                    payment.status == breez_sdk.PaymentStatus.FAILED
+                    or payment.status.value == breez_sdk.PaymentStatus.FAILED.value
+                ):
                     return PaymentStatus(False)
                 else:
                     return PaymentStatus(None)
