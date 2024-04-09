@@ -23,6 +23,7 @@ class DataObject:
 def build_test_id(test: WalletTest):
     return f"{test.funding_source}.{test.function}({test.description})"
 
+
 def _raise(error):
     data = error["data"] if "data" in error else None
     if "module" not in error or "class" not in error:

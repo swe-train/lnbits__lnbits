@@ -866,6 +866,25 @@
                                             }
                                         ]
                                     }
+                                },
+                                {
+                                    "description": "no data",
+                                    "response": {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {}
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
