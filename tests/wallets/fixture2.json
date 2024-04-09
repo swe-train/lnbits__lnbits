@@ -885,6 +885,58 @@
                                             }
                                         ]
                                     }
+                                },
+                                {
+                                    "description": "bad checking_id",
+                                    "response": {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": [
+                                                        {
+                                                            "status": "paid",
+                                                            "payment_hash": "baaade35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d72"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "description": "unpaid",
+                                    "response": {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": [
+                                                        {
+                                                            "status": "unpaid",
+                                                            "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
