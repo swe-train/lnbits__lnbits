@@ -463,6 +463,11 @@ window.windowMixin = {
       document.body.setAttribute('data-theme', newValue)
       this.$q.localStorage.set('lnbits.theme', newValue)
     },
+    setCustomBorderColor() {
+      const primaryColor = window.getComputedStyle(document.documentElement)
+      .getPropertyValue('--q-color-primary').trim()
+      console.log(primaryColor)
+    },
     copyText: function (text, message, position) {
       var notify = this.$q.notify
       Quasar.utils.copyToClipboard(text).then(function () {
@@ -563,6 +568,7 @@ window.windowMixin = {
         this.$q.localStorage.getItem('lnbits.theme')
       )
     }
+    this.setCustomBorderColor()
 
     if (window.user) {
       this.g.user = Object.freeze(window.LNbits.map.user(window.user))
