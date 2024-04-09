@@ -213,7 +213,7 @@ else:
                     logger.info(ex)
                 # assume that payment failed?
                 return PaymentResponse(
-                    False, None, None, None, f"payment failed: {exc}"
+                    False, None, None, None, f"Payment failed: '{exc}'."
                 )
 
             # second condition is relevant for tests only

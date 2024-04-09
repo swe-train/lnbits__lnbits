@@ -121,27 +121,29 @@ class CoreLightningWallet(Wallet):
         except Bolt11Exception as exc:
             return PaymentResponse(False, None, None, None, str(exc))
 
-        previous_payment = await self.get_payment_status(invoice.payment_hash)
-        if previous_payment.paid:
-            return PaymentResponse(False, None, None, None, "invoice already paid")
-
-        if not invoice.amount_msat or invoice.amount_msat <= 0:
-            return PaymentResponse(
-                False, None, None, None, "CLN 0 amount invoice not supported"
-            )
-
-        fee_limit_percent = fee_limit_msat / invoice.amount_msat * 100
-        # so fee_limit_percent is applied even on payments with fee < 5000 millisatoshi
-        # (which is default value of exemptfee)
-        payload = {
-            "bolt11": bolt11,
-            "maxfeepercent": f"{fee_limit_percent:.11}",
-            "exemptfee": 0,
-            # so fee_limit_percent is applied even on payments with fee < 5000
-            # millisatoshi (which is default value of exemptfee)
-            "description": invoice.description,
-        }
         try:
+            previous_payment = await self.get_payment_status(invoice.payment_hash)
+            if previous_payment.paid:
+                return PaymentResponse(False, None, None, None, "invoice already paid")
+
+            if not invoice.amount_msat or invoice.amount_msat <= 0:
+                return PaymentResponse(
+                    False, None, None, None, "CLN 0 amount invoice not supported"
+                )
+
+            fee_limit_percent = fee_limit_msat / invoice.amount_msat * 100
+            # so fee_limit_percent is applied even
+            # on payments with fee < 5000 millisatoshi
+            # (which is default value of exemptfee)
+            payload = {
+                "bolt11": bolt11,
+                "maxfeepercent": f"{fee_limit_percent:.11}",
+                "exemptfee": 0,
+                # so fee_limit_percent is applied even on payments with fee < 5000
+                # millisatoshi (which is default value of exemptfee)
+                "description": invoice.description,
+            }
+
             r = await run_sync(lambda: self.ln.call("pay", payload))
         except RpcError as exc:
             try:
@@ -152,6 +154,10 @@ class CoreLightningWallet(Wallet):
                     f" '{exc.error.get('message') or exc.error}'."  # type: ignore
                 )
             return PaymentResponse(False, None, None, None, error_message)
+        except Exception as exc:
+            logger.info(f"Failed to pay invoice {bolt11}")
+            logger.warning(exc)
+            return PaymentResponse(False, None, None, None, f"Payment failed: '{exc}'.")
 
         fee_msat = -int(r["amount_sent_msat"] - r["amount_msat"])
         return PaymentResponse(
