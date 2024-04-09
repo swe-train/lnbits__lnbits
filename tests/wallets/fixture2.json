@@ -653,7 +653,11 @@
                                                     "method": "test_method",
                                                     "payload": "y",
                                                     "error": {
-                                                        "attempts": [{"fail_reason": "RPC 'test_method' failed with 'test-error'."}]
+                                                        "attempts": [
+                                                            {
+                                                                "fail_reason": "RPC 'test_method' failed with 'test-error'."
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             }
@@ -674,6 +678,75 @@
                                                     "payload": "y",
                                                     "error": "test-error"
                                                 }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "get_invoice_status": {
+            "mocks": {
+                "breez": {
+                    "breez_connect": {
+                        "method": "breez_sdk.connect",
+                        "request_type": "function"
+                    }
+                },
+                "corelightning": {
+                    "rpc_new": {
+                        "method": "pyln.client.LightningRpc.__new__",
+                        "request_type": "function",
+                        "response_type": "data",
+                        "response": {
+                            "help": {
+                                "request_type": "function",
+                                "response_type": "json",
+                                "response": {
+                                    "help": [
+                                        {
+                                            "command": "some command"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tests": [
+                {
+                    "description": "success",
+                    "call_params": {
+                        "checking_id": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                    },
+                    "expect": {
+                        "success": true,
+                        "failed": false,
+                        "pending": false
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": []
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "description": "one invoice",
+                                    "response": {
+                                        "listinvoices": {
+                                            "request_type": "function",
+                                            "response_type": "json",
+                                            "response": {
+                                                "invoices": [
+                                                    {
+                                                        "status": "paid",
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                ]
                                             }
                                         }
                                     }
