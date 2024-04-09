@@ -818,6 +818,54 @@
                                             }
                                         ]
                                     }
+                                },
+                                {
+                                    "description": "rpc error",
+                                    "response": {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "exception",
+                                                "response": {
+                                                    "module": "pyln.client.lightning",
+                                                    "class": "RpcError",
+                                                    "data": {
+                                                        "method": "test_method",
+                                                        "payload": "y",
+                                                        "error": "test-error"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "description": "error",
+                                    "response": {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "exception",
+                                                "response": {
+                                                    "data": "test-error"
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
