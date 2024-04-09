@@ -758,18 +758,42 @@
                                         "listinvoices": {
                                             "request_type": "function",
                                             "response_type": "json",
-                                            "response": {
-                                                "invoices": [
-                                                    {
-                                                        "status": "paid",
-                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
-                                                    }
-                                                ]
-                                            }
+                                            "response": [
+                                                {
+                                                    "invoices": []
+                                                },
+                                                {
+                                                    "invoices": [
+                                                        {
+                                                            "status": "paid",
+                                                            "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     }
                                 }
                             ]
+                        }
+                    }
+                },
+                {
+                    "description": "pending",
+                    "call_params": {
+                        "checking_id": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                    },
+                    "expect": {
+                        "success": false,
+                        "failed": false,
+                        "pending": true
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": []
+                        },
+                        "corelightning": {
+                            "rpc_new": []
                         }
                     }
                 }

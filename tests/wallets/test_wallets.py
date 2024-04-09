@@ -24,13 +24,6 @@ def build_test_id(test: WalletTest):
     return f"{test.funding_source}.{test.function}({test.description})"
 
 
-def fn_factory(data):
-    def f1(*args, **kwargs):
-        return data
-
-    return f1
-
-
 def fn_raise(error):
     def f1(*args, **kwargs):
         data = error["data"] if "data" in error else None
@@ -43,6 +36,17 @@ def fn_raise(error):
         raise error_class(**data)
 
     return f1
+
+
+def _raise(error):
+    data = error["data"] if "data" in error else None
+    if "module" not in error or "class" not in error:
+        return Exception(data)
+
+    error_module = importlib.import_module(error["module"])
+    error_class = getattr(error_module, error["class"])
+
+    return error_class(**data)
 
 
 @pytest.mark.asyncio
@@ -68,10 +72,10 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
                     response = _dict_to_object(response)
 
                 if response_type == "exception":
-                    return_value[field_name] = fn_raise(response)
-                    # mocker.patch().side
+                    return_value[field_name] = Mock(side_effect=_raise(response))
                 else:
-                    return_value[field_name] = fn_factory(response)
+                    response = response if isinstance(response, list) else [response]
+                    return_value[field_name] = Mock(side_effect=response)
             elif request_type == "data":
                 return_value[field_name] = _dict_to_object(response)
             elif request_type == "json":
