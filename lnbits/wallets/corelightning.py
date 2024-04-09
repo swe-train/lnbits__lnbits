@@ -195,33 +195,35 @@ class CoreLightningWallet(Wallet):
     async def get_payment_status(self, checking_id: str) -> PaymentStatus:
         try:
             r: dict = self.ln.listpays(payment_hash=checking_id)  # type: ignore
+
+            if "pays" not in r:
+                return PaymentPendingStatus()
+            if not r["pays"]:
+                # no payment with this payment_hash is found
+                return PaymentFailedStatus()
+
+            payment_resp = r["pays"][-1]
+
+            if payment_resp["payment_hash"] == checking_id:
+                status = payment_resp["status"]
+                if status == "complete":
+                    fee_msat = -int(
+                        payment_resp["amount_sent_msat"] - payment_resp["amount_msat"]
+                    )
+
+                    return PaymentSuccessStatus(
+                        fee_msat=fee_msat, preimage=payment_resp["preimage"]
+                    )
+                elif status == "failed":
+                    return PaymentFailedStatus()
+                else:
+                    return PaymentPendingStatus()
+            else:
+                logger.warning(f"supplied an invalid checking_id: {checking_id}")
+            return PaymentPendingStatus()
+
         except Exception:
             return PaymentPendingStatus()
-        if "pays" not in r:
-            return PaymentPendingStatus()
-        if not r["pays"]:
-            # no payment with this payment_hash is found
-            return PaymentFailedStatus()
-
-        payment_resp = r["pays"][-1]
-
-        if payment_resp["payment_hash"] == checking_id:
-            status = payment_resp["status"]
-            if status == "complete":
-                fee_msat = -int(
-                    payment_resp["amount_sent_msat"] - payment_resp["amount_msat"]
-                )
-
-                return PaymentSuccessStatus(
-                    fee_msat=fee_msat, preimage=payment_resp["preimage"]
-                )
-            elif status == "failed":
-                return PaymentFailedStatus()
-            else:
-                return PaymentPendingStatus()
-        else:
-            logger.warning(f"supplied an invalid checking_id: {checking_id}")
-        return PaymentPendingStatus()
 
     async def paid_invoices_stream(self) -> AsyncGenerator[str, None]:
         while True:
