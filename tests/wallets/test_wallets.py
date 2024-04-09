@@ -23,21 +23,6 @@ class DataObject:
 def build_test_id(test: WalletTest):
     return f"{test.funding_source}.{test.function}({test.description})"
 
-
-def fn_raise(error):
-    def f1(*args, **kwargs):
-        data = error["data"] if "data" in error else None
-        if "module" not in error or "class" not in error:
-            raise Exception(data)
-
-        error_module = importlib.import_module(error["module"])
-        error_class = getattr(error_module, error["class"])
-
-        raise error_class(**data)
-
-    return f1
-
-
 def _raise(error):
     data = error["data"] if "data" in error else None
     if "module" not in error or "class" not in error:
@@ -62,24 +47,12 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
     for mock in test_data.mocks:
         return_value = {}
         for field_name in mock.response:
-            field = mock.response[field_name]
-            response_type = field["response_type"]
-            request_type = field["request_type"]
-            response = field["response"]
+            value = mock.response[field_name]
+            values = value if isinstance(value, list) else [value]
 
-            if request_type == "function":
-                if response_type == "data":
-                    response = _dict_to_object(response)
-
-                if response_type == "exception":
-                    return_value[field_name] = Mock(side_effect=_raise(response))
-                else:
-                    response = response if isinstance(response, list) else [response]
-                    return_value[field_name] = Mock(side_effect=response)
-            elif request_type == "data":
-                return_value[field_name] = _dict_to_object(response)
-            elif request_type == "json":
-                return_value[field_name] = response
+            return_value[field_name] = Mock(
+                side_effect=[_mock_field(f) for f in values]
+            )
 
         m = _data_mock(return_value)
         mocker.patch(mock.method, m)
@@ -87,11 +60,23 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
     wallet = _load_funding_source(test_data.funding_source)
     await _check_assertions(wallet, test_data)
 
-    # wallet: BaseWallet = _load_funding_source(test_data.funding_source)
-    # status = await wallet.status()
 
-    # assert status.error_message is None
-    # assert status.balance_msat == 55000
+def _mock_field(field):
+    response_type = field["response_type"]
+    request_type = field["request_type"]
+    response = field["response"]
+
+    if request_type == "data":
+        return _dict_to_object(response)
+
+    if request_type == "function":
+        if response_type == "data":
+            return _dict_to_object(response)
+
+        if response_type == "exception":
+            return _raise(response)
+
+    return response
 
 
 def _load_funding_source(funding_source: FundingSourceConfig) -> BaseWallet:

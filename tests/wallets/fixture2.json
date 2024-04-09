@@ -755,14 +755,18 @@
                                 {
                                     "description": "one invoice",
                                     "response": {
-                                        "listinvoices": {
-                                            "request_type": "function",
-                                            "response_type": "json",
-                                            "response": [
-                                                {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
                                                     "invoices": []
-                                                },
-                                                {
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
                                                     "invoices": [
                                                         {
                                                             "status": "paid",
@@ -770,8 +774,8 @@
                                                         }
                                                     ]
                                                 }
-                                            ]
-                                        }
+                                            }
+                                        ]
                                     }
                                 }
                             ]
@@ -793,23 +797,29 @@
                             "breez_connect": []
                         },
                         "corelightning": {
-                            "rpc_new": [{
-                                "description": "no invoice",
-                                "response": {
-                                    "listinvoices": {
-                                        "request_type": "function",
-                                        "response_type": "json",
-                                        "response": [
+                            "rpc_new": [
+                                {
+                                    "description": "no invoice",
+                                    "response": {
+                                        "listinvoices": [
                                             {
-                                                "invoices": []
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
                                             },
                                             {
-                                                "invoices": []
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
                                             }
                                         ]
                                     }
                                 }
-                            }]
+                            ]
                         }
                     }
                 }
