@@ -145,6 +145,11 @@ class CoreLightningWallet(Wallet):
             }
 
             r = await run_sync(lambda: self.ln.call("pay", payload))
+
+            fee_msat = -int(r["amount_sent_msat"] - r["amount_msat"])
+            return PaymentResponse(
+                True, r["payment_hash"], fee_msat, r["payment_preimage"], None
+            )
         except RpcError as exc:
             try:
                 error_message = exc.error["attempts"][-1]["fail_reason"]  # type: ignore
@@ -159,10 +164,6 @@ class CoreLightningWallet(Wallet):
             logger.warning(exc)
             return PaymentResponse(False, None, None, None, f"Payment failed: '{exc}'.")
 
-        fee_msat = -int(r["amount_sent_msat"] - r["amount_msat"])
-        return PaymentResponse(
-            True, r["payment_hash"], fee_msat, r["payment_preimage"], None
-        )
 
     async def get_invoice_status(self, checking_id: str) -> PaymentStatus:
         try:
