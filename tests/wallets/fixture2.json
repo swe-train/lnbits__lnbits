@@ -793,7 +793,23 @@
                             "breez_connect": []
                         },
                         "corelightning": {
-                            "rpc_new": []
+                            "rpc_new": [{
+                                "description": "no invoice",
+                                "response": {
+                                    "listinvoices": {
+                                        "request_type": "function",
+                                        "response_type": "json",
+                                        "response": [
+                                            {
+                                                "invoices": []
+                                            },
+                                            {
+                                                "invoices": []
+                                            }
+                                        ]
+                                    }
+                                }
+                            }]
                         }
                     }
                 }
