@@ -1149,6 +1149,34 @@
                                             "response": null
                                         }
                                     }
+                                },
+                                {
+                                    "description": "error",
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "data": "test-error"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "description": "pending",
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "status": {
+                                                    "value": 1
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -1162,6 +1190,44 @@
                                                 "request_type": "function",
                                                 "response_type": "json",
                                                 "response": {}
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "response": {
+                                        "listpays": [
+                                            {
+                                                "description": "pending status",
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "pays": [
+                                                        {
+                                                            "status": "pending",
+                                                            "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "response": {
+                                        "listpays": [
+                                            {
+                                                "description": "bad checking_id",
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "pays": [
+                                                        {
+                                                            "status": "complete",
+                                                            "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d7bbbbbb"
+                                                        }
+                                                    ]
+                                                }
                                             }
                                         ]
                                     }
