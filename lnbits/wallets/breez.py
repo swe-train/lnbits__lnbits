@@ -254,8 +254,14 @@ else:
             payment = self.sdk_services.payment_by_hash(checking_id)
             if payment is None:
                 return PaymentStatus(None)
-            assert payment.payment_type == breez_sdk.PaymentType.SENT
-            if payment.status == breez_sdk.PaymentStatus.COMPLETE:
+            assert (
+                payment.payment_type == breez_sdk.PaymentType.SENT
+                or payment.payment_type.value == breez_sdk.PaymentType.SENT.value
+            )
+            if (
+                payment.status == breez_sdk.PaymentStatus.COMPLETE
+                or payment.status.value == breez_sdk.PaymentStatus.COMPLETE.value
+            ):
                 return PaymentStatus(
                     True, payment.fee_msat, payment.details.data.payment_preimage
                 )
