@@ -154,10 +154,7 @@ class CoreLightningWallet(Wallet):
             try:
                 error_message = exc.error["attempts"][-1]["fail_reason"]  # type: ignore
             except Exception:
-                error_message = (
-                    f"CoreLightning method '{exc.method}' failed with"
-                    f" '{exc.error.get('message') or exc.error}'."  # type: ignore
-                )
+                error_message = f"RPC '{exc.method}' failed with '{exc.error}'."
             return PaymentResponse(False, None, None, None, error_message)
         except KeyError as exc:
             logger.warning(exc)
