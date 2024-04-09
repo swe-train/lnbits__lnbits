@@ -100,6 +100,8 @@ def _load_funding_source(funding_source: FundingSourceConfig) -> BaseWallet:
 
 
 def _dict_to_object(data: dict) -> DataObject:
+    if not data:
+        return data
     d = {**data}
     for k in data:
         value = data[k]

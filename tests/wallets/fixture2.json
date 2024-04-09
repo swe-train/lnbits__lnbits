@@ -794,7 +794,18 @@
                     },
                     "mocks": {
                         "breez": {
-                            "breez_connect": []
+                            "breez_connect": [
+                                {
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "data",
+                                            "response": null
+                                        }
+                                    }
+                                }
+                            ]
                         },
                         "corelightning": {
                             "rpc_new": [
@@ -930,6 +941,72 @@
                                                     "invoices": [
                                                         {
                                                             "status": "unpaid",
+                                                            "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "description": "failed",
+                    "description1": "pending should be false in the 'expect', this is a bug",
+                    "call_params": {
+                        "checking_id": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                    },
+                    "expect": {
+                        "success": false,
+                        "failed": true,
+                        "pending": true
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "description": "FAILED",
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "data",
+                                            "response": {
+                                                "payment_type": {
+                                                    "value": 2
+                                                },
+                                                "status": {
+                                                    "value": 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "description": "expired",
+                                    "response": {
+                                        "listinvoices": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": []
+                                                }
+                                            },
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "invoices": [
+                                                        {
+                                                            "status": "expired",
                                                             "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
                                                         }
                                                     ]
