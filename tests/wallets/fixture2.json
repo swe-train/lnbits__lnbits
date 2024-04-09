@@ -1195,6 +1195,19 @@
                                     }
                                 },
                                 {
+                                    "description": "error",
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "exception",
+                                            "response": {
+                                                "data": "test-error"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
                                     "response": {
                                         "listpays": [
                                             {
