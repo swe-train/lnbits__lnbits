@@ -169,27 +169,28 @@ class CoreLightningWallet(Wallet):
     async def get_invoice_status(self, checking_id: str) -> PaymentStatus:
         try:
             r: dict = self.ln.listinvoices(payment_hash=checking_id)  # type: ignore
+
+            if not r["invoices"]:
+                return PaymentPendingStatus()
+
+            invoice_resp = r["invoices"][-1]
+
+            if invoice_resp["payment_hash"] == checking_id:
+                if invoice_resp["status"] == "paid":
+                    return PaymentSuccessStatus()
+                elif invoice_resp["status"] == "unpaid":
+                    return PaymentPendingStatus()
+                elif invoice_resp["status"] == "expired":
+                    return PaymentFailedStatus()
+            else:
+                logger.warning(f"supplied an invalid checking_id: {checking_id}")
+            return PaymentPendingStatus()
         except RpcError as exc:
             logger.warning(exc)
             return PaymentPendingStatus()
         except Exception as exc:
             logger.warning(exc)
             return PaymentPendingStatus()
-        if not r["invoices"]:
-            return PaymentPendingStatus()
-
-        invoice_resp = r["invoices"][-1]
-
-        if invoice_resp["payment_hash"] == checking_id:
-            if invoice_resp["status"] == "paid":
-                return PaymentSuccessStatus()
-            elif invoice_resp["status"] == "unpaid":
-                return PaymentPendingStatus()
-            elif invoice_resp["status"] == "expired":
-                return PaymentFailedStatus()
-        else:
-            logger.warning(f"supplied an invalid checking_id: {checking_id}")
-        return PaymentPendingStatus()
 
     async def get_payment_status(self, checking_id: str) -> PaymentStatus:
         try:
