@@ -1124,6 +1124,51 @@
                             ]
                         }
                     }
+                },
+                {
+                    "description": "pending",
+                    "call_params": {
+                        "checking_id": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                    },
+                    "expect": {
+                        "success": false,
+                        "failed": false,
+                        "pending": true,
+                        "fee_msat": null
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "description": "no data",
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "data",
+                                            "response": null
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "response": {
+                                        "listpays": [
+                                            {
+                                                "description": "no data",
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {}
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
             ]
         }
