@@ -1020,6 +1020,112 @@
                     }
                 }
             ]
+        },
+        "get_payment_status": {
+            "mocks": {
+                "breez": {
+                    "breez_connect": {
+                        "method": "breez_sdk.connect",
+                        "request_type": "function"
+                    }
+                },
+                "corelightning": {
+                    "rpc_new": {
+                        "method": "pyln.client.LightningRpc.__new__",
+                        "request_type": "function",
+                        "response_type": "data",
+                        "response": {
+                            "help": {
+                                "request_type": "function",
+                                "response_type": "json",
+                                "response": {
+                                    "help": [
+                                        {
+                                            "command": "some command"
+                                        }
+                                    ]
+                                }
+                            },
+                            "listinvoices": {
+                                "request_type": "function",
+                                "response_type": "json",
+                                "response": {
+                                    "invoices": []
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tests": [
+                {
+                    "description": "success",
+                    "call_params": {
+                        "checking_id": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                    },
+                    "expect": {
+                        "success": true,
+                        "failed": false,
+                        "pending": false,
+                        "fee_msat": 50,
+                        "preimage": "0000000000000000000000000000000000000000000000000000000000000000"
+                    },
+                    "mocks": {
+                        "breez": {
+                            "breez_connect": [
+                                {
+                                    "response_type": "data",
+                                    "response": {
+                                        "payment_by_hash": {
+                                            "request_type": "function",
+                                            "response_type": "data",
+                                            "response": {
+                                                "fee_msat": 50,
+                                                "details": {
+                                                    "data": {
+                                                        "payment_preimage": "0000000000000000000000000000000000000000000000000000000000000000"
+                                                    }
+                                                },
+                                                "payment_type": {
+                                                    "value": 1
+                                                },
+                                                "status": {
+                                                    "value": 2
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "corelightning": {
+                            "rpc_new": [
+                                {
+                                    "response": {
+                                        "listpays": [
+                                            {
+                                                "request_type": "function",
+                                                "response_type": "json",
+                                                "response": {
+                                                    "pays": [
+                                                        {
+                                                            "status": "complete",
+                                                            "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96",
+                                                            "preimage": "0000000000000000000000000000000000000000000000000000000000000000",
+                                                            "amount_sent_msat": 21000,
+                                                            "amount_msat": 21050
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
         }
     }
 }
