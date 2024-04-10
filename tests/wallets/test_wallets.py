@@ -74,7 +74,13 @@ def _check_calls(expected_calls):
             req = func_call["request_data"]
             args = req["args"] if "args" in req else {}
             kwargs = req["kwargs"] if "kwargs" in req else {}
-            func_call["spy"].assert_called_with(*args, **kwargs)
+            if "klass" in req:
+                *rest, cls = req["klass"].split(".")
+                req_module = importlib.import_module(".".join(rest))
+                req_class = getattr(req_module, cls)
+                func_call["spy"].assert_called_with(req_class(*args, **kwargs))
+            else:
+                func_call["spy"].assert_called_with(*args, **kwargs)
 
 
 def _spy_mocks(mocker: MockerFixture, test_data: WalletTest, wallet: BaseWallet):

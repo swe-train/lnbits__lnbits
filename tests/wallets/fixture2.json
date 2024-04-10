@@ -282,6 +282,16 @@
                                     "response": {
                                         "receive_payment": {
                                             "request_type": "function",
+                                            "request_data": {
+                                                "klass": "breez_sdk.ReceivePaymentRequest",
+                                                "kwargs": {
+                                                    "amount_msat": 555000,
+                                                    "description": "Test Invoice",
+                                                    "preimage": null,
+                                                    "opening_fee_params": null,
+                                                    "use_description_hash": null
+                                                }
+                                            },
                                             "response_type": "data",
                                             "response": {
                                                 "ln_invoice": {
