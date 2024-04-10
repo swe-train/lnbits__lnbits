@@ -60,27 +60,40 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
 
     wallet = _load_funding_source(test_data.funding_source)
 
-    x = {}
+    expected_calls = _spy_mocks(mocker, test_data, wallet)
+
+    await _check_assertions(wallet, test_data)
+
+    _check_calls(expected_calls)
+
+
+def _check_calls(expected_calls):
+    for func in expected_calls:
+        func_calls = expected_calls[func]
+        for func_call in func_calls:
+            func_call["spy"].assert_called_with(**func_call["request_data"])
+
+
+def _spy_mocks(mocker: MockerFixture, test_data: WalletTest, wallet: BaseWallet):
+    expected_calls = {}
     for mock in test_data.mocks:
         for field_name in mock.response:
             value = mock.response[field_name]
             values = value if isinstance(value, list) else [value]
 
-            for f in values:
-                request_type = f["request_type"]
-                if request_type == "function" and "request_data" in f:
-                    print("### xxx", field_name, test_data.funding_source.client_field)
-                    c = getattr(wallet, test_data.funding_source.client_field)
-                    print("### x2", c)
-                    x[field_name] = {
-                        "spy": mocker.spy(c, field_name),
-                        "request_data": f["request_data"],
-                    }
+            expected_calls[field_name] = [
+                {
+                    "spy": mocker.spy(
+                        getattr(wallet, test_data.funding_source.client_field),
+                        field_name,
+                    ),
+                    "request_data": f["request_data"],
+                }
+                for f in values
+                if f["request_type"] == "function" and "request_data" in f
+            ]
 
-    await _check_assertions(wallet, test_data)
-
-    for f in x:
-        x[f]["spy"].assert_called_with(**x[f]["request_data"])
+    return expected_calls
 
 
 def _mock_field(field):
