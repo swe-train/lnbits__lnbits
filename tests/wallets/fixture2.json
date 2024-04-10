@@ -359,6 +359,16 @@
                                     "response": {
                                         "invoice": {
                                             "request_type": "function",
+                                            "request_data": {
+                                                "kwargs": {
+                                                    "deschashonly": false,
+                                                    "description": "Test Invoice",
+                                                    "expiry": null,
+                                                    "exposeprivatechannels": true,
+                                                    "label": "test-label",
+                                                    "msatoshi": 555000
+                                                }
+                                            },
                                             "response_type": "exception",
                                             "response": {
                                                 "data": "test-error"
@@ -370,6 +380,16 @@
                                     "response": {
                                         "invoice": {
                                             "request_type": "function",
+                                            "request_data": {
+                                                "kwargs": {
+                                                    "deschashonly": false,
+                                                    "description": "Test Invoice",
+                                                    "expiry": null,
+                                                    "exposeprivatechannels": true,
+                                                    "label": "test-label",
+                                                    "msatoshi": 555000
+                                                }
+                                            },
                                             "response_type": "json",
                                             "response": {
                                                 "code": -1,
@@ -405,6 +425,16 @@
                                     "response": {
                                         "invoice": {
                                             "request_type": "function",
+                                            "request_data": {
+                                                "kwargs": {
+                                                    "deschashonly": false,
+                                                    "description": "Test Invoice",
+                                                    "expiry": null,
+                                                    "exposeprivatechannels": true,
+                                                    "label": "test-label",
+                                                    "msatoshi": 555000
+                                                }
+                                            },
                                             "response_type": "json",
                                             "response": {}
                                         }
@@ -437,6 +467,16 @@
                                     "response": {
                                         "invoice": {
                                             "request_type": "function",
+                                            "request_data": {
+                                                "kwargs": {
+                                                    "deschashonly": false,
+                                                    "description": "Test Invoice",
+                                                    "expiry": null,
+                                                    "exposeprivatechannels": true,
+                                                    "label": "test-label",
+                                                    "msatoshi": 555000
+                                                }
+                                            },
                                             "response_type": "exception",
                                             "response": {
                                                 "module": "pyln.client.lightning",
@@ -600,6 +640,17 @@
                                         "call": {
                                             "description": "indirect call to `pay` (via `call`)",
                                             "request_type": "function",
+                                            "request_data": {
+                                                "args": [
+                                                    "pay",
+                                                    {
+                                                        "bolt11": "lnbc210n1pjlgal5sp5xr3uwlfm7ltumdjyukhys0z2rw6grgm8me9k4w9vn05zt9svzzjspp5ud2jdfpaqn5c2k2vphatsjypfafyk8rcvkvwexnrhmwm94ex4jtqdqu24hxjapq23jhxapqf9h8vmmfvdjscqpjrzjqta942048v7qxh5x7pxwplhmtwfl0f25cq23jh87rhx7lgrwwvv86r90guqqnwgqqqqqqqqqqqqqqpsqyg9qxpqysgqylngsyg960lltngzy90e8n22v4j2hvjs4l4ttuy79qqefjv8q87q9ft7uhwdjakvnsgk44qyhalv6ust54x98whl3q635hkwgsyw8xgqjl7jwu",
+                                                        "description": "Unit Test Invoice",
+                                                        "exemptfee": 0,
+                                                        "maxfeepercent": "119.04761905"
+                                                    }
+                                                ]
+                                            },
                                             "response_type": "exception",
                                             "response": {
                                                 "data": "test-error"
@@ -635,6 +686,17 @@
                                         "call": {
                                             "description": "indirect call to `pay` (via `call`)",
                                             "request_type": "function",
+                                            "request_data": {
+                                                "args": [
+                                                    "pay",
+                                                    {
+                                                        "bolt11": "lnbc210n1pjlgal5sp5xr3uwlfm7ltumdjyukhys0z2rw6grgm8me9k4w9vn05zt9svzzjspp5ud2jdfpaqn5c2k2vphatsjypfafyk8rcvkvwexnrhmwm94ex4jtqdqu24hxjapq23jhxapqf9h8vmmfvdjscqpjrzjqta942048v7qxh5x7pxwplhmtwfl0f25cq23jh87rhx7lgrwwvv86r90guqqnwgqqqqqqqqqqqqqqpsqyg9qxpqysgqylngsyg960lltngzy90e8n22v4j2hvjs4l4ttuy79qqefjv8q87q9ft7uhwdjakvnsgk44qyhalv6ust54x98whl3q635hkwgsyw8xgqjl7jwu",
+                                                        "description": "Unit Test Invoice",
+                                                        "exemptfee": 0,
+                                                        "maxfeepercent": "119.04761905"
+                                                    }
+                                                ]
+                                            },
                                             "response_type": "json",
                                             "response": {}
                                         }
@@ -668,6 +730,17 @@
                                         "call": {
                                             "description": "indirect call to `pay` (via `call`)",
                                             "request_type": "function",
+                                            "request_data": {
+                                                "args": [
+                                                    "pay",
+                                                    {
+                                                        "bolt11": "lnbc210n1pjlgal5sp5xr3uwlfm7ltumdjyukhys0z2rw6grgm8me9k4w9vn05zt9svzzjspp5ud2jdfpaqn5c2k2vphatsjypfafyk8rcvkvwexnrhmwm94ex4jtqdqu24hxjapq23jhxapqf9h8vmmfvdjscqpjrzjqta942048v7qxh5x7pxwplhmtwfl0f25cq23jh87rhx7lgrwwvv86r90guqqnwgqqqqqqqqqqqqqqpsqyg9qxpqysgqylngsyg960lltngzy90e8n22v4j2hvjs4l4ttuy79qqefjv8q87q9ft7uhwdjakvnsgk44qyhalv6ust54x98whl3q635hkwgsyw8xgqjl7jwu",
+                                                        "description": "Unit Test Invoice",
+                                                        "exemptfee": 0,
+                                                        "maxfeepercent": "119.04761905"
+                                                    }
+                                                ]
+                                            },
                                             "response_type": "exception",
                                             "response": {
                                                 "module": "pyln.client.lightning",
@@ -692,6 +765,17 @@
                                         "call": {
                                             "description": "indirect call to `pay` (via `call`)",
                                             "request_type": "function",
+                                            "request_data": {
+                                                "args": [
+                                                    "pay",
+                                                    {
+                                                        "bolt11": "lnbc210n1pjlgal5sp5xr3uwlfm7ltumdjyukhys0z2rw6grgm8me9k4w9vn05zt9svzzjspp5ud2jdfpaqn5c2k2vphatsjypfafyk8rcvkvwexnrhmwm94ex4jtqdqu24hxjapq23jhxapqf9h8vmmfvdjscqpjrzjqta942048v7qxh5x7pxwplhmtwfl0f25cq23jh87rhx7lgrwwvv86r90guqqnwgqqqqqqqqqqqqqqpsqyg9qxpqysgqylngsyg960lltngzy90e8n22v4j2hvjs4l4ttuy79qqefjv8q87q9ft7uhwdjakvnsgk44qyhalv6ust54x98whl3q635hkwgsyw8xgqjl7jwu",
+                                                        "description": "Unit Test Invoice",
+                                                        "exemptfee": 0,
+                                                        "maxfeepercent": "119.04761905"
+                                                    }
+                                                ]
+                                            },
                                             "response_type": "exception",
                                             "response": {
                                                 "module": "pyln.client.lightning",
@@ -781,6 +865,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -838,6 +927,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -845,6 +939,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -859,6 +958,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -866,6 +970,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "exception",
                                                 "response": {
                                                     "module": "pyln.client.lightning",
@@ -886,6 +995,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -893,6 +1007,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "exception",
                                                 "response": {
                                                     "data": "test-error"
@@ -907,6 +1026,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -914,6 +1038,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {}
                                             }
@@ -926,6 +1055,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -933,6 +1067,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": [
@@ -952,6 +1091,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -959,6 +1103,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": [
@@ -1018,6 +1167,11 @@
                                         "listinvoices": [
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": []
@@ -1025,6 +1179,11 @@
                                             },
                                             {
                                                 "request_type": "function",
+                                                "request_data": {
+                                                    "kwargs": {
+                                                        "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96"
+                                                    }
+                                                },
                                                 "response_type": "json",
                                                 "response": {
                                                     "invoices": [
