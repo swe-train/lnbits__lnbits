@@ -2,6 +2,7 @@
     "funding_sources": {
         "breez": {
             "wallet_class": "BreezSdkWallet",
+            "client_field": "sdk_services",
             "settings": {
                 "breez_api_key": "100",
                 "breez_greenlight_seed": "push divert icon era bracket fade much kind reason injury suffer muffin",
@@ -11,6 +12,7 @@
         },
         "corelightning": {
             "wallet_class": "CoreLightningWallet",
+            "client_field": "ln",
             "settings": {
                 "corelightning_rpc": "some-mock-value"
             }
@@ -299,6 +301,14 @@
                                     "response": {
                                         "invoice": {
                                             "request_type": "function",
+                                            "request_data": {
+                                                "deschashonly": false,
+                                                "description": "Test Invoice",
+                                                "expiry": null,
+                                                "exposeprivatechannels": true,
+                                                "label": "test-label",
+                                                "msatoshi": 555000
+                                            },
                                             "response_type": "json",
                                             "response": {
                                                 "payment_hash": "e35526a43d04e985594c0dfab848814f524b1c786598ec9a63beddb2d726ac96",

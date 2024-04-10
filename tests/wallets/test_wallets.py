@@ -59,7 +59,28 @@ async def test_wallets(mocker: MockerFixture, test_data: WalletTest):
         mocker.patch(mock.method, m)
 
     wallet = _load_funding_source(test_data.funding_source)
+
+    x = {}
+    for mock in test_data.mocks:
+        for field_name in mock.response:
+            value = mock.response[field_name]
+            values = value if isinstance(value, list) else [value]
+
+            for f in values:
+                request_type = f["request_type"]
+                if request_type == "function" and "request_data" in f:
+                    print("### xxx", field_name, test_data.funding_source.client_field)
+                    c = getattr(wallet, test_data.funding_source.client_field)
+                    print("### x2", c)
+                    x[field_name] = {
+                        "spy": mocker.spy(c, field_name),
+                        "request_data": f["request_data"],
+                    }
+
     await _check_assertions(wallet, test_data)
+
+    for f in x:
+        x[f]["spy"].assert_called_with(**x[f]["request_data"])
 
 
 def _mock_field(field):

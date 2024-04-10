@@ -247,6 +247,7 @@ def rest_wallet_fixtures_from_json(path) -> List["WalletTest"]:
 
 class FundingSourceConfig(BaseModel):
     wallet_class: str
+    client_field: Optional[str]
     settings: dict
 
 
