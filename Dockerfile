@@ -17,7 +17,7 @@ RUN apt-get install -y postgresql-client-14
 COPY . /app
 WORKDIR /app
 
-RUN make
+RUN make build
 RUN mkdir data
 
 ENV LNBITS_PORT="5000"
