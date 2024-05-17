@@ -25,6 +25,7 @@ from ..crud import (
     get_inactive_extensions,
     get_installed_extensions,
     get_user,
+    get_user_extensions,
 )
 
 generic_router = APIRouter(
@@ -103,9 +104,9 @@ async def extensions_install(request: Request, user: User = Depends(check_user_e
         installed_exts_ids = []
 
     try:
-        all_extensions = get_valid_extensions()
-
-        all_ext_ids = [ext.code for ext in all_extensions]
+        all_ext_ids = [ext.code for ext in get_valid_extensions()]
+        user_exts = await get_user_extensions(user.id)
+        paid_user_exts = [ue.extension for ue in user_exts if ue.is_paid]
         inactive_extensions = await get_inactive_extensions()
         db_version = await get_dbversions()
         extensions = [
@@ -122,6 +123,9 @@ async def extensions_install(request: Request, user: User = Depends(check_user_e
                 "isAvailable": ext.id in all_ext_ids,
                 "isAdminOnly": ext.id in settings.lnbits_admin_extensions,
                 "isActive": ext.id not in inactive_extensions,
+                "requiresPayment": not user.admin
+                and ext.requires_payment
+                and ext.id not in paid_user_exts,
                 "latestRelease": (
                     dict(ext.latest_release) if ext.latest_release else None
                 ),
