@@ -132,6 +132,7 @@ async def api_install_extension(
 async def api_update_pay_to_enable(ext_id: str, data: PayToEnableInfo):
     try:
         await update_extension_pay_to_enable(ext_id, data)
+        return {"success": True}
     except Exception as exc:
         logger.warning(exc)
         raise HTTPException(
@@ -153,12 +154,12 @@ async def api_enable_extension(ext_id: str, user: User = Depends(check_user_exis
 
         if user.admin or not ext.requires_payment:
             await update_user_extension(user_id=user.id, extension=ext_id, active=True)
-            return
+            return {"success": True}
 
         user_ext = await get_user_extension(user.id, ext_id)
         if user_ext and user_ext.is_paid:
             await update_user_extension(user_id=user.id, extension=ext_id, active=True)
-            return
+            return {"success": True}
 
         assert (
             user_ext and user_ext.extra and user_ext.extra.payment_hash_to_enable
@@ -178,6 +179,7 @@ async def api_enable_extension(ext_id: str, user: User = Depends(check_user_exis
         await update_user_extension_extra(user.id, ext_id, user_ext.extra)
 
         await update_user_extension(user_id=user.id, extension=ext_id, active=True)
+        return {"success": True}
 
     except AssertionError as exc:
         raise HTTPException(HTTPStatus.BAD_REQUEST, str(exc)) from exc
@@ -198,6 +200,7 @@ async def api_disable_extension(ext_id: str, user: User = Depends(check_user_exi
     try:
         logger.info(f"Disabeling extension: {ext_id}.")
         await update_user_extension(user_id=user.id, extension=ext_id, active=False)
+        return {"success": True}
     except Exception as exc:
         logger.warning(exc)
         raise HTTPException(
@@ -224,6 +227,7 @@ async def api_activate_extension(ext_id: str):
         ]
 
         await update_installed_extension_state(ext_id=ext_id, active=True)
+        return {"success": True}
     except Exception as exc:
         logger.warning(exc)
         raise HTTPException(
@@ -244,6 +248,7 @@ async def api_deactivate_extension(ext_id: str):
         settings.lnbits_deactivated_extensions.append(ext_id)
 
         await update_installed_extension_state(ext_id=ext_id, active=False)
+        return {"success": True}
     except Exception as exc:
         logger.warning(exc)
         raise HTTPException(
@@ -293,6 +298,7 @@ async def api_uninstall_extension(
             await delete_installed_extension(ext_id=ext_info.id)
 
         logger.success(f"Extension '{ext_id}' uninstalled.")
+        return {"success": True}
     except Exception as exc:
         raise HTTPException(
             status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=str(exc)
