@@ -17,7 +17,11 @@ from lnbits.helpers import template_renderer
 from lnbits.settings import settings
 from lnbits.wallets import get_funding_source
 
-from ...extension_manager import InstallableExtension, get_valid_extensions
+from ...extension_manager import (
+    InstallableExtension,
+    PayToEnableInfo,
+    get_valid_extensions,
+)
 from ...utils.exchange_rates import allowed_currencies, currencies
 from ..crud import (
     create_wallet,
@@ -123,7 +127,7 @@ async def extensions_install(request: Request, user: User = Depends(check_user_e
                 "isAvailable": ext.id in all_ext_ids,
                 "isAdminOnly": ext.id in settings.lnbits_admin_extensions,
                 "isActive": ext.id not in inactive_extensions,
-                "requiresPayment": not user.admin
+                "isPaymentRequired": not user.admin
                 and ext.requires_payment
                 and ext.id not in paid_user_exts,
                 "latestRelease": (
@@ -132,7 +136,7 @@ async def extensions_install(request: Request, user: User = Depends(check_user_e
                 "installedRelease": (
                     dict(ext.installed_release) if ext.installed_release else None
                 ),
-                "payToEnable": (dict(ext.pay_to_enable) if ext.pay_to_enable else {}),
+                "payToEnable": dict(ext.pay_to_enable or PayToEnableInfo()),
             }
             for ext in installable_exts
         ]
